@@ -1,7 +1,7 @@
 name: resizable_stack_image
 description: Resizable Stack Image
-version: 0.0.1
-homepage: https://github.com/Smit-71/Resizable_Stack_Image.git
+version: 0.0.2
+homepage: https://github.com/Smit-71/Resizable_Stack_Image_Example.git
 
 environment:
   sdk: '>=3.1.1 <4.0.0'

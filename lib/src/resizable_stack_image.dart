@@ -1,10 +1,17 @@
 library resizable_stack_image;
+
 import 'package:flutter/material.dart';
 
 class ResizableStackImage extends StatefulWidget {
-  const ResizableStackImage({super.key, required this.child});
+  const ResizableStackImage(
+      {super.key,
+      required this.height,
+      required this.width,
+      required this.child});
 
   final Widget child;
+  final double height;
+  final double width;
 
   @override
   _ResizableStackImageState createState() => _ResizableStackImageState();
@@ -13,31 +20,30 @@ class ResizableStackImage extends StatefulWidget {
 const ballDiameter = 20.0;
 double top = 0;
 double left = 0;
-double height = 150;
-double width = 150;
+double stackHeight = 150;
+double stackWidth = 150;
 
 class _ResizableStackImageState extends State<ResizableStackImage> {
   void onDrag(double dx, double dy) {
-    var newHeight = height + dy;
-    var newWidth = width + dx;
+    var newHeight = stackHeight + dy;
+    var newWidth = stackWidth + dx;
 
     setState(() {
-      height = newHeight > 0 ? newHeight : 0;
-      width = newWidth > 0 ? newWidth : 0;
+      stackHeight = newHeight > 0 ? newHeight : 0;
+      stackWidth = newWidth > 0 ? newWidth : 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Stack(
       children: <Widget>[
         Positioned(
           top: top,
           left: left,
           child: SizedBox(
-            height: height,
-            width: width,
+            height: stackHeight,
+            width: stackWidth,
             child: widget.child,
           ),
         ),
@@ -47,25 +53,25 @@ class _ResizableStackImageState extends State<ResizableStackImage> {
           child: ManipulatingBall(
             onDrag: (dx, dy) {
               var mid = (dx + dy) / 2;
-              var newHeight = height - 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : height - 2 * mid;
-              var newWidth = width - 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : width - 2 * mid;
+              var newHeight = stackHeight - 2 * mid > widget.height
+                  ? widget.height
+                  : stackHeight - 2 * mid;
+              var newWidth = stackWidth - 2 * mid > widget.height
+                  ? widget.height
+                  : stackWidth - 2 * mid;
 
               setState(() {
-                height = newHeight > 20 ? newHeight : 20;
-                width = newWidth > 20 ? newWidth : 20;
+                stackHeight = newHeight > 20 ? newHeight : 20;
+                stackWidth = newWidth > 20 ? newWidth : 20;
                 top = top + mid < 0
                     ? 0
-                    : top + mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : top + mid > widget.height
+                        ? widget.height
                         : top + mid;
                 left = left + mid < 0
                     ? 0
-                    : left + mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : left + mid > widget.height
+                        ? widget.height
                         : left + mid;
               });
             },
@@ -73,112 +79,112 @@ class _ResizableStackImageState extends State<ResizableStackImage> {
         ),
         Positioned(
           top: top - ballDiameter / 2,
-          left: left + width - ballDiameter / 2,
+          left: left + stackWidth - ballDiameter / 2,
           child: ManipulatingBall(
             onDrag: (dx, dy) {
               var mid = (dx + (dy * -1)) / 2;
 
-              var newHeight = height + 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : height + 2 * mid;
-              var newWidth = width + 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : width + 2 * mid;
+              var newHeight = stackHeight + 2 * mid > widget.height
+                  ? widget.height
+                  : stackHeight + 2 * mid;
+              var newWidth = stackWidth + 2 * mid > widget.height
+                  ? widget.height
+                  : stackWidth + 2 * mid;
 
               setState(() {
-                height = newHeight > 20 ? newHeight : 20;
-                width = newWidth > 20 ? newWidth : 20;
+                stackHeight = newHeight > 20 ? newHeight : 20;
+                stackWidth = newWidth > 20 ? newWidth : 20;
                 top = top - mid < 0
                     ? 0
-                    : top - mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : top - mid > widget.height
+                        ? widget.height
                         : top - mid;
                 left = left - mid < 0
                     ? 0
-                    : left - mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : left - mid > widget.height
+                        ? widget.height
                         : left - mid;
               });
             },
           ),
         ),
         Positioned(
-          top: top + height - ballDiameter / 2,
-          left: left + width - ballDiameter / 2,
+          top: top + stackHeight - ballDiameter / 2,
+          left: left + stackWidth - ballDiameter / 2,
           child: ManipulatingBall(
             onDrag: (dx, dy) {
               var mid = (dx + dy) / 2;
 
-              var newHeight = height + 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : height + 2 * mid;
-              var newWidth = width + 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : width + 2 * mid;
+              var newHeight = stackHeight + 2 * mid > widget.height
+                  ? widget.height
+                  : stackHeight + 2 * mid;
+              var newWidth = stackWidth + 2 * mid > widget.height
+                  ? widget.height
+                  : stackWidth + 2 * mid;
 
               setState(() {
-                height = newHeight > 20 ? newHeight : 20;
-                width = newWidth > 20 ? newWidth : 20;
+                stackHeight = newHeight > 20 ? newHeight : 20;
+                stackWidth = newWidth > 20 ? newWidth : 20;
                 top = top - mid < 0
                     ? 0
-                    : top - mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : top - mid > widget.height
+                        ? widget.height
                         : top - mid;
                 left = left - mid < 0
                     ? 0
-                    : left - mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : left - mid > widget.height
+                        ? widget.height
                         : left - mid;
               });
             },
           ),
         ),
         Positioned(
-          top: top + height - ballDiameter / 2,
+          top: top + stackHeight - ballDiameter / 2,
           left: left - ballDiameter / 2,
           child: ManipulatingBall(
             onDrag: (dx, dy) {
               var mid = ((dx * -1) + dy) / 2;
 
-              var newHeight = height + 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : height + 2 * mid;
-              var newWidth = width + 2 * mid > size.height * 0.22
-                  ? size.height * 0.22
-                  : width + 2 * mid;
+              var newHeight = stackHeight + 2 * mid > widget.height
+                  ? widget.height
+                  : stackHeight + 2 * mid;
+              var newWidth = stackWidth + 2 * mid > widget.height
+                  ? widget.height
+                  : stackWidth + 2 * mid;
 
               setState(() {
-                height = newHeight > 20 ? newHeight : 20;
-                width = newWidth > 20 ? newWidth : 20;
+                stackHeight = newHeight > 20 ? newHeight : 20;
+                stackWidth = newWidth > 20 ? newWidth : 20;
                 top = top - mid < 0
                     ? 0
-                    : top - mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : top - mid > widget.height
+                        ? widget.height
                         : top - mid;
                 left = left - mid < 0
                     ? 0
-                    : left - mid > size.height * 0.22
-                        ? size.height * 0.22
+                    : left - mid > widget.height
+                        ? widget.height
                         : left - mid;
               });
             },
           ),
         ),
         Positioned(
-          top: top + height / 2 - ballDiameter / 2,
-          left: left + width / 2 - ballDiameter / 2,
+          top: top + stackHeight / 2 - ballDiameter / 2,
+          left: left + stackWidth / 2 - ballDiameter / 2,
           child: ManipulatingBall(
             onDrag: (dx, dy) {
               setState(() {
                 top = top + dy < 0
                     ? 0
-                    : top + dy > size.height * 0.22 - height
-                        ? size.height * 0.22 - height
+                    : top + dy > widget.height - stackHeight
+                        ? widget.height - stackHeight
                         : top + dy;
                 left = left + dx < 0
                     ? 0
-                    : left + dx > size.height * 0.22 - width
-                        ? size.height * 0.22 - width
+                    : left + dx > widget.height - stackWidth
+                        ? widget.height - stackWidth
                         : left + dx;
               });
             },
